@@ -7,3 +7,6 @@ url=git@github.com:0x11901/skynet.git
 [submodule "server/3rd/skynet_websocket"]
 	path = server/3rd/skynet_websocket
 	url = https://github.com/sundream/skynet_websocket.git
+[submodule "server/3rd/lua-protobuf"]
+	path = server/3rd/lua-protobuf
+	url = https://github.com/starwing/lua-protobuf.git
