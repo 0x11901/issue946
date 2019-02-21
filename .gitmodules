@@ -1,3 +1,6 @@
 [submodule "server/skynet"]
 	path = server/skynet
 url=git@github.com:0x11901/skynet.git
+[submodule "server/3rd/lua-cjson"]
+	path = server/3rd/lua-cjson
+	url = https://github.com/sundream/lua-cjson.git
