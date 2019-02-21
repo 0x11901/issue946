@@ -22,7 +22,11 @@ cd  .git 同级目录下
 ./server/skynet/skynet ./config/wsmain.config
 ```
 
-然后使用客户端连接 skynet，使用 top 发现 skynet 的内存占用率缓慢增加，大概 1M/min。挂机一天仍未释法。
+然后使用客户端连接 skynet，使用 top 发现 skynet 的内存占用率缓慢增加，大概 1M/min。
+
+![内存增长](https://i.imgur.com/wrMg1KD.gif)
+
+挂机一天仍未释法。
 
 客户端关键代码如下：
 
@@ -63,7 +67,7 @@ const NSInteger kMaxClient = 100;
     _createTimer = [NSTimer timerWithTimeInterval:1 target:self selector:@selector(createSocket:) userInfo:nil repeats:YES];
 #endif
     [[NSRunLoop currentRunLoop] addTimer:_createTimer forMode:NSDefaultRunLoopMode];
-    
+
     [NSTimer scheduledTimerWithTimeInterval:5 repeats:YES block:^(NSTimer * _Nonnull timer) {
         NSLog(@"%f=", self->totalTime / self->times);
     }];
@@ -78,7 +82,7 @@ const NSInteger kMaxClient = 100;
 //    NSLog(@"createwebsocket %lu", (unsigned long)webSocket.hash);
 
     [sockets addObject:webSocket];
-    
+
     index ++;
     if (index >= kMaxClient)
     {
@@ -91,16 +95,16 @@ const NSInteger kMaxClient = 100;
 {
     dispatch_queue_t mainQueue = dispatch_get_main_queue();
     GCDAsyncSocket* asyncSocket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:mainQueue];
-    
+
     NSError *error = nil;
     if (![asyncSocket connectToHost:@"127.0.0.1" onPort:8001 error:&error])
     {
         NSLog(@"%@", error);
         return;
     }
-    
+
     [sockets addObject:asyncSocket];
-    
+
     index ++;
     if (index >= kMaxClient)
     {
@@ -110,7 +114,7 @@ const NSInteger kMaxClient = 100;
 
 - (void)sendMessage:(CGFloat)f
 {
-    
+
 }
 
 - (void)socketDidSecure:(GCDAsyncSocket *)sock
@@ -146,7 +150,7 @@ const NSInteger kMaxClient = 100;
 {
     NSLog(@"%s  %p", __FUNCTION__, sock);
     [sock readDataToData:[GCDAsyncSocket CRLFData] withTimeout:-1 tag:0];
-    
+
 }
 
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
@@ -158,7 +162,7 @@ const NSInteger kMaxClient = 100;
 ///--------------------------------------
 #pragma mark - SRWebSocketDelegate
 ///--------------------------------------
-                    
+
 - (void)webSocketDidOpen:(SRWebSocket *)webSocket;
 {
 //    NSLog(@"Websocket Connected");
@@ -193,7 +197,7 @@ const NSInteger kMaxClient = 100;
 {
     NSLog(@"WebSocket received pong");
 }
-                  
+
 - (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message
 {
 //    NSLog(@"Received  %ld", webSocket.hash);
@@ -210,11 +214,9 @@ const NSInteger kMaxClient = 100;
     }
 }
 
-                    
+
 @end
 ```
-
-
 
 ## 注
 
